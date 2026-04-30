@@ -1,6 +1,6 @@
-# 🏋️ Gym Progress Tracker (Full-Stack Backend Project)
+#  Gym Progress Tracker (Full-Stack Backend Project)
 
-## 🌟 Key Features
+##  Key Features
 
 *   **Secure User Authentication:** Implemented via Spring Security with protected session management.
 *   **Automatic 1RM Calculation:** Integrated business logic in the Service layer to calculate One-Rep Max using the Epley formula: `Weight * (1 + Reps / 30)`[cite: 1].
@@ -8,7 +8,7 @@
 *   **Personalized Experience:** Data isolation ensures users only see and manage their own training records[cite: 1].
 *   **Dynamic Filtering:** Ability to sort exercises by status (**Planned** or **Completed**) for better workout organization[cite: 1].
 
-## 🛠 Technical Stack
+##  Technical Stack
 
 *   **Language:** Java 17+[cite: 1]
 *   **Framework:** Spring Boot (MVC, Security, Data JPA)[cite: 1]
