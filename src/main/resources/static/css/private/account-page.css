@@ -1,0 +1,257 @@
+body {
+    margin: 0;
+    background-color: #282E33;
+    font-family: sans-serif;
+}
+
+label:hover, input[type=radio]:hover {
+    cursor: pointer;
+}
+
+button {
+    display: flex;
+    align-items: center;
+    padding: 9px 14px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16px;
+    background-color: #3A87E0;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    outline: none;
+    transition: background-color .1s ease-in-out;
+}
+
+button:hover {
+    cursor: pointer;
+    background-color: #3479c9;
+}
+
+.button_type_close {
+    background-color: transparent;
+    padding: 5px 8px 6px 8px;
+}
+
+.button_type_close:hover {
+    background-color: #efeff0;
+}
+
+.button_type_approve {
+    background-color: #79C672;
+}
+
+.button_type_approve:hover {
+    background-color: #6dab67;
+}
+
+.page-wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+.container {
+    width: 100%;
+    max-width: 900px;
+    padding: 32px;
+    border-radius: 20px;
+    background-color: #fff;
+    height: fit-content;
+}
+
+/* Header */
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 20px;
+}
+
+.header__text h2 {
+    margin: 0;
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 26px;
+}
+
+.header__statistics {
+    display: flex;
+    gap: 16px;
+}
+
+.stat-badge {
+    font-size: 14px;
+    font-weight: 400;
+    color: #a7a7a7;
+}
+
+.stat-badge strong {
+    color: #3A87E0;
+    font-weight: 600;
+}
+
+/* Filter */
+.filter-container {
+    margin-bottom: 8px;
+}
+
+.filter-form {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0;
+}
+
+.filter-form__input {
+    padding: 6px 12px 6px 6px;
+    border: none;
+    border-radius: 6px;
+    transition: background-color .1s ease-in-out;
+}
+
+.filter-form__input:hover {
+    cursor: pointer;
+    background-color: #efeff0;
+}
+
+.filter-form button {
+    margin-left: 12px;
+}
+
+/* Records table */
+.records-container {
+    border: 1px solid #dedede;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.hint {
+    padding: 14px;
+    border-radius: 6px;
+    color: #a7a7a7;
+    font-size: 15px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead {
+    background-color: #f7f8fa;
+}
+
+thead th {
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 600;
+    color: #6b7280;
+    border-bottom: 1px solid #dedede;
+    white-space: nowrap;
+}
+
+tbody tr {
+    border-bottom: 1px solid #dedede;
+    transition: background-color .1s ease-in-out;
+}
+
+tbody tr:last-child {
+    border-bottom: none;
+}
+
+tbody tr:hover {
+    background-color: #f9fafb;
+}
+
+tbody td {
+    padding: 10px 14px;
+    font-size: 15px;
+    font-weight: 300;
+    vertical-align: middle;
+}
+
+.orm-value {
+    font-weight: 600;
+    color: #3A87E0;
+}
+
+.badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.badge-planned {
+    background-color: #fef3cd;
+    color: #856404;
+}
+
+.badge-completed {
+    background-color: #d1e7dd;
+    color: #0a3622;
+}
+
+.record__controls {
+    display: flex;
+    gap: 6px;
+}
+
+.record__controls-form {
+    margin: 0;
+}
+
+/* Add form */
+.management-container {
+    margin-top: 12px;
+}
+
+.management-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: flex-end;
+    margin-bottom: 0;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.form-group label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #6b7280;
+}
+
+.form-group input,
+.form-group select {
+    padding: 10px 14px;
+    border: 1px solid #dedede;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 300;
+    outline: none;
+    transition: border .1s, box-shadow .1s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border: 1px solid #a9bed6;
+    box-shadow: 0 0 2px 0 #2d81e2;
+}
+
+.input-exercise { width: 180px; }
+.input-number   { width: 80px; }
+.input-group    { width: 130px; }
+
+.management-form__button {
+    white-space: nowrap;
+    align-self: flex-end;
+}

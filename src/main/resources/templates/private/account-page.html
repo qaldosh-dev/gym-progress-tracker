@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Gym Progress Tracker</title>
+    <link href="/css/private/account-page.css" rel="stylesheet">
+    <link href="/css/fragments/header-fragment.css" rel="stylesheet">
+</head>
+<body>
+<div th:replace="fragments/header-fragment.html :: header-fragment (userName=${userName})"></div>
+
+<div class="page-wrapper">
+    <div class="container">
+
+        <!-- Header + stats -->
+        <div class="header-container">
+            <div class="header__text">
+                <h2>Gym Tracker</h2>
+            </div>
+            <div class="header__statistics">
+                <span class="stat-badge"><strong th:text="${numberOfPlanned}">0</strong> planned</span>
+                <span class="stat-badge"><strong th:text="${numberOfCompleted}">0</strong> completed</span>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="filter-container">
+            <form th:with="filter=${#strings.toUpperCase(param.filter)}"
+                  action="/account" method="get" class="filter-form">
+                <div class="filter-form__input">
+                    <input th:checked="${filter != 'PLANNED' and filter != 'COMPLETED'}"
+                           type="radio" id="filter-all" name="filter" value="all">
+                    <label for="filter-all">All</label>
+                </div>
+                <div class="filter-form__input">
+                    <input th:checked="${filter == 'PLANNED'}"
+                           type="radio" id="filter-planned" name="filter" value="PLANNED">
+                    <label for="filter-planned">Planned</label>
+                </div>
+                <div class="filter-form__input">
+                    <input th:checked="${filter == 'COMPLETED'}"
+                           type="radio" id="filter-completed" name="filter" value="COMPLETED">
+                    <label for="filter-completed">Completed</label>
+                </div>
+                <button type="submit">Apply</button>
+            </form>
+        </div>
+
+        <!-- Records table -->
+        <div th:with="isRecordsEmpty=${records == null || records.isEmpty()}"
+             class="records-container">
+
+            <div th:if="${isRecordsEmpty}"
+                 th:switch="${#strings.toUpperCase(param.filter)}"
+                 class="hint">
+                <span th:case="'PLANNED'">No planned exercises!</span>
+                <span th:case="'COMPLETED'">No completed exercises!</span>
+                <span th:case="*">No records yet — add your first exercise!</span>
+            </div>
+
+            <table th:if="${!isRecordsEmpty}">
+                <thead>
+                <tr>
+                    <th>Exercise</th>
+                    <th>Muscle group</th>
+                    <th>Weight (kg)</th>
+                    <th>Reps</th>
+                    <th>1RM (kg)</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="record : ${records}">
+                    <td th:text="${record.exerciseName}">Bench Press</td>
+                    <td th:text="${record.muscleGroup != null ? record.muscleGroup : '—'}">Chest</td>
+                    <td th:text="${record.weight}">80</td>
+                    <td th:text="${record.reps}">5</td>
+                    <td class="orm-value" th:text="${record.oneRepMax}">93.3</td>
+                    <td>
+                        <span th:if="${record.status.name() == 'PLANNED'}"
+                              class="badge badge-planned">Planned</span>
+                        <span th:if="${record.status.name() == 'COMPLETED'}"
+                              class="badge badge-completed">✓ Completed</span>
+                    </td>
+                    <td>
+                        <div class="record__controls">
+                            <form th:if="${record.status.name() == 'PLANNED'}"
+                                  action="/account/complete-record" method="post"
+                                  class="record__controls-form">
+                                <input type="hidden" name="id" th:value="${record.id}"/>
+                                <input type="hidden" name="filter" th:value="${currentFilter}"/>
+                                <button type="submit" class="button_type_approve">
+                                    <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <g clip-path="url(#clip0)">
+                                            <path d="M8.5 0C3.808 0 0 3.808 0 8.5C0 13.192 3.808 17 8.5 17C13.192 17 17 13.192 17 8.5C17 3.808 13.192 0 8.5 0ZM7.65 12.257L3.4 8.007L4.5985 6.8085L7.65 9.8515L12.4015 5.1L13.6 6.307L7.65 12.257Z" fill="#fff"/>
+                                        </g>
+                                        <defs>
+                                            <clipPath id="clip0">
+                                                <rect width="17" height="17" fill="white"/>
+                                            </clipPath>
+                                        </defs>
+                                    </svg>
+                                </button>
+                            </form>
+                            <form action="/account/delete-record" method="post"
+                                  class="record__controls-form"
+                                  onsubmit="return confirm('Delete this record?')">
+                                <input type="hidden" name="id" th:value="${record.id}"/>
+                                <input type="hidden" name="filter" th:value="${currentFilter}"/>
+                                <button type="submit" class="button_type_close">
+                                    <svg width="24" height="24" viewBox="0 0 24 24">
+                                        <path d="M12.071 13.485l-2.828 2.829-1.415-1.415 2.829-2.828-2.829-2.828 1.415-1.415 2.828 2.829L14.9 7.828l.707.708.707.707-2.829 2.828 2.829 2.829-1.415 1.414-2.828-2.829z"/>
+                                    </svg>
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Add form -->
+        <div class="management-container">
+            <form action="/account/add-record" method="post" class="management-form">
+                <div class="form-group">
+                    <label for="exerciseName">Exercise</label>
+                    <input type="text" id="exerciseName" name="exerciseName"
+                           placeholder="Bench Press" class="input-exercise" required maxlength="100"/>
+                </div>
+                <div class="form-group">
+                    <label for="muscleGroup">Muscle group</label>
+                    <select id="muscleGroup" name="muscleGroup" class="input-group">
+                        <option value="">— any —</option>
+                        <option value="Chest">Chest</option>
+                        <option value="Back">Back</option>
+                        <option value="Legs">Legs</option>
+                        <option value="Shoulders">Shoulders</option>
+                        <option value="Arms">Arms</option>
+                        <option value="Core">Core</option>
+                        <option value="Cardio">Cardio</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="weight">Weight (kg)</label>
+                    <input type="number" id="weight" name="weight"
+                           placeholder="80" min="0.5" max="1000" step="0.5"
+                           class="input-number" required/>
+                </div>
+                <div class="form-group">
+                    <label for="reps">Reps</label>
+                    <input type="number" id="reps" name="reps"
+                           placeholder="5" min="1" max="200" step="1"
+                           class="input-number" required/>
+                </div>
+                <button type="submit" class="management-form__button">Add Record</button>
+            </form>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>
