@@ -17,4 +17,4 @@
 *   **Build Tool:** Maven[cite: 1]
 *   **Architecture:** Clean Layered Architecture (Controller -> Service -> Repository -> Entity)[cite: 1]
 
-![App_Screenshot](src/main/resources/static.css/images/Снимок экрана 2026-04-30 203104.png)
+![App_Screenshot](src/main/resources/static/css/images/Снимок экрана 2026-04-30 203104.png)
